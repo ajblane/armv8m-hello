@@ -16,7 +16,7 @@ sudo apt-get install python
 * gcc linaro toolchain (armv8l-linux-gnueabihf):
 download [gcc-linaro-7.3.1-2018.04-rc1-x86_64_armv8l-linux-gnueabihf](http://snapshots.linaro.org/components/toolchain/binaries/7.3-2018.04-rc1/armv8l-linux-gnueabihf/) and extract into the project directory.
 
-* buid qemu
+* build qemu
 
 ```
 $ git clone https://github.com/qemu/qemu.git
@@ -34,7 +34,7 @@ inspect mps2-an505 by using qemu-system-arm after building completely qemu
 $ qemu-system-arm -machine help
 ```
 
-Quickly started
+Quickly Started
 ---
 
 * run
