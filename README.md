@@ -55,11 +55,12 @@ qemu: fatal: Lockup: can't escalate 3 to HardFault (current priority -1)
 R00=00000000 R01=00000000 R02=00000000 R03=00000000
 R04=00000000 R05=00000000 R06=00000000 R07=00000000
 R08=00000000 R09=00000000 R10=00000000 R11=00000000
-R12=00000000 R13=200fffe0 R14=fffffff9 R15=00000000
+R12=00000000 R13=100fffe0 R14=fffffff9 R15=00000000
 XPSR=40000003 -Z-- A S handler
 FPSCR: 00000000
 makefile:27: recipe for target 'qemu' failed
 make: *** [qemu] Aborted (core dumped)
+
 ```
 
 * debug qemu with kernel.elf
