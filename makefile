@@ -23,25 +23,35 @@ $(IMAGE): kernel.ld boot.o $(OBJS)
 	$(OBJDUMP) -d $(IMAGE) > kernel.list
 	$(OBJDUMP) -t $(IMAGE) | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernel.sym
 	$(READELF) -A $(IMAGE)
+
+dumpvmstate:
+	qemu-system-arm -machine mps2-an505 -cpu cortex-m33 \
+	                    -m 1024 \
+			    -nographic -serial mon:stdio \
+	                    -kernel $(IMAGE) \
+			    -dump-vmstate vmstate.json 
+
 qemu:
 	@qemu-system-arm -M ? | grep mps2-an505 >/dev/null || exit
 	qemu-system-arm -machine mps2-an505 -cpu cortex-m33 \
 	                    -m 4096 \
 			    -nographic -serial mon:stdio \
-	                    -kernel $(IMAGE) \
+	                    -kernel $(IMAGE) 
 			   
-qemugdbserver:
+gdbserver:
 	qemu-system-arm -machine mps2-an505 -cpu cortex-m33 \
 	                    -m 4096 \
 			    -nographic -serial mon:stdio \
 	                    -kernel $(IMAGE) \
 			    -S -s 
+gdb: $(IMAGE)
+	$(GDB) $^ -ex "target remote:1234"
+
 
 gdbqemu:
 	gdb --args qemu-system-arm -machine mps2-an505 -cpu cortex-m33  -m 4096  -nographic -serial mon:stdio -kernel kernel.elf
 
-gdb: $(IMAGE)
-	$(GDB) $^ -ex "target remote:1234"
+
 			    
 clean:
 	rm -f $(IMAGE) *.o *.list *.sym
